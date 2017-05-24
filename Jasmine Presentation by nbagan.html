@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)http://bittersweetryan.github.io/jasmine-presentation/#slide-0 -->
+<html class="js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ready">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=1024, user-scalable=no">
+
+    <title>Unit Testing JavaScript With Jasmine</title>
+
+    <!-- Required stylesheet -->
+    <link rel="stylesheet" href="./Jasmine Presentation by nbagan_files/deck.core.css">
+
+    <link rel="stylesheet" href="./Jasmine Presentation by nbagan_files/style.css">
+
+    <!-- Required Modernizr file -->
+    <script src="./Jasmine Presentation by nbagan_files/modernizr.custom.js"></script>
+
+</head>
+
+<body class="deck-container deck-scale on-slide-slide-0 on-slide-0">
+    <section class="slide deck-current" id="slide-0">
+        <div class="deck-slide-scaler">
+            <h1>Unit Testing JavaScript</h1>
+        </div>
+    </section>
+
+    <section class="slide deck-next" id="slide-1">
+        <div class="deck-slide-scaler">
+            <h2>What we'll cover</h2>
+            <ul>
+                <li>Intro to TDD</li>
+                <li>Intro to BDD</li>
+                <li>Writing Testable JS Code</li>
+                <li>Jasmine Setup</li>
+                <li>Jasmine Matchers</li>
+                <li>Mocha Setup</li>
+                <li>Jasmine vs. Mocha, Chai, and Sinon</li>
+                <li>NightwatchJS</li>
+                    <li>Code Example</li>
+                    <li>Live Environment</li>
+                <li>Fixtures</li>
+                <li>Runs / Waits</li>
+                <li>Spies</li>
+            </ul>
+        </div>
+
+    </section>
+
+    <section class="slide deck-after" id="slide-2">
+        <div class="">
+            <h2>Intro to TDD (Test Driven Development)</h2>
+            <h3>Its also called test-driven design, is a method of software development in which unit testing is repeatedly done
+                on source code. Write your tests watch it fails and then refactor it<strong>. concept is we write these tests
+                to check if the code we wrote works fine.</strong> After each test, refactoring is done and then the same
+                is performed again.
+            </h3>
+            <br>
+            <h4>Test-Driven Development Process : </h4>
+            <ul>
+                <li>Add a Test</li>
+                <li>Run all tests and see if the new one fails</li>
+                <li>Write some code</li>
+                <li>Run tests and Refactor code</li>
+                <li>Repeat</li>
+            </ul>
+            <img src="Jasmine Presentation by nbagan_files/code_driven_testing.jpg" alt="">
+
+
+        </div>
+
+    </section>
+
+    <section class="slide deck-after" id="slide-3">
+        <div class="">
+            <h2>Intro to BDD (Behavior Driven Development)</h2>
+            <h3>It is a software development process that originally emerged from Test Driven Development (TDD)
+            </h3>
+            <br>
+            <h4>Behavior Driven Development focuses on</h4>
+            <ul>
+                <li>Providing a shared process and shared tools promoting communication to the software developers, business
+                    analysts and stakeholders to collaborate on software development, with the aim of delivering product
+                    with business value.</li>
+                <li>What a system should do and not on how it should be implemented.</li>
+                <li>Providing better readability and visibility.</li>
+                <li>Verifying not only the working of the software but also that it meets the customer’s expectations.</li>
+            </ul>
+            <img src="Jasmine Presentation by nbagan_files/BDD.png" alt="">
+
+
+        </div>
+
+    </section>
+    <section class="slide deck-after" id="slide-4">
+        <div class="deck-slide-scaler">
+            <h2>Intro to BDD Continued...</h2>
+            <pre class="prettyprint prettyprinted"><span class="com">//describe your code</span><span class="pln">
+describe </span><span class="pun">(</span><span class="pln"> </span><span class="str">'presentation.js'</span><span class="pln"> </span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+  
+  </span><span class="com">//what it should do</span><span class="pln">
+  it </span><span class="pun">(</span><span class="pln"> </span><span class="str">'should be informative'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+      
+      </span><span class="com">//expect something </span><span class="pln">
+      expect</span><span class="pun">(</span><span class="pln"> 
+          presentation</span><span class="pun">.</span><span class="pln">inform</span><span class="pun">()</span><span class="pln"> 
+      </span><span class="pun">).</span><span class="pln">toBeTruthy</span><span class="pun">();</span><span class="pln">
+  </span><span class="pun">)};</span><span class="pln">
+</span><span class="pun">}</span><span class="pln"> </span><span class="pun">);</span></pre>
+            <p>Note how <code class="prettyprint prettyprinted"><span class="pln">describe </span><span class="pun">+</span><span class="pln"> it</span></code>                reads like a sentence.</p>
+            <p>&nbsp;</p>
+        </div>
+
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-4">
+        <div class="deck-slide-scaler">
+            <h2><span class="red">Red</span> <span class="green">Green</span> Refactor (TDD)</h2>
+            <p>TDD &amp; BDD go together like coffee shops and hipsters.</p>
+            <p>The key concept is to write your unit test before you write a line of implementation code.</p>
+            <p>
+                Writing code this way helps you:
+            </p>
+            <ul>
+                <li>have less chance for false positives</li>
+                <li>write a more expressive API</li>
+                <li>only what the code that needs to be written</li>
+            </ul>
+        </div>
+
+
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-5">
+        <div class="deck-slide-scaler">
+            <h2>TDD The Purist Way</h2>
+            <p>A true TDD purist will tell you to follow the following path to testing enlightenment:</p>
+            <ol>
+                <li>Write a failing test.</li>
+                <li>Make the test pass as <strong>easily</strong> as possible.</li>
+                <li>Try to break the test.</li>
+            </ol>
+        </div>
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-6">
+        <div class="deck-slide-scaler">
+            <h2>FizzBuzz</h2>
+            <p>Lets take a look at a simple FizzBuzz example to so you what this looks like.</p>
+            <p>What is FizzBuzz?</p>
+            <ul class="">
+                <li class="slide deck-after" id="slide-7">FizzBuzz is a common coding exercise in job interviews.</li>
+                <li class="slide deck-after" id="slide-8">If a number is divisible by 3 return "Fizz".</li>
+                <li class="slide deck-after" id="slide-9">If a number is divisible by 5 return "Buzz".</li>
+                <li class="slide deck-after" id="slide-10">If a number is divisible by 3 and 5 return "FizzBuzz".</li>
+            </ul>
+        </div>
+
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-11">
+        <div class="deck-slide-scaler">
+            <h2><span class="red">Red</span></h2>
+            <p>Spec</p>
+            <pre class="prettyprint prettyprinted"><span class="pln">expect</span><span class="pun">(</span><span class="pln"> kata</span><span class="pun">.</span><span class="pln">fizzBuzz</span><span class="pun">(</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="pun">)</span><span class="pln">
+    </span><span class="pun">.</span><span class="pln">toEqual</span><span class="pun">(</span><span class="pln"> </span><span class="str">'Fizz'</span><span class="pln"> </span><span class="pun">);</span></pre>
+            <p>fizzBuzz.js</p>
+            <pre class="prettyprint prettyprinted"><span class="kwd">var</span><span class="pln"> fizzBuzz </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln"> test </span><span class="pun">){</span><span class="pln">
+    </span><span class="com">//nothing is here yet</span><span class="pln">
+</span><span class="pun">}</span></pre>
+        </div>
+
+
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-12">
+        <div class="deck-slide-scaler">
+            <h2><span class="green">Green</span></h2>
+            <p>The simplest implementation.</p>
+            <p>Spec</p>
+            <pre class="prettyprint prettyprinted"><span class="pln">expect</span><span class="pun">(</span><span class="pln">kata</span><span class="pun">.</span><span class="pln">fizzBuzz</span><span class="pun">(</span><span class="lit">3</span><span class="pun">)).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'Fizz'</span><span class="pun">);</span></pre>
+            <p>fizzBuzz.js</p>
+            <pre class="prettyprint prettyprinted"><span class="kwd">var</span><span class="pln"> fizzBuzz </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln"> test </span><span class="pun">){</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="str">"Fizz"</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></pre>
+        </div>
+
+
+
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-13">
+        <div class="deck-slide-scaler">
+            <h2>Refactor</h2>
+            <p>Spec</p>
+            <pre class="prettyprint prettyprinted"><span class="pln">expect</span><span class="pun">(</span><span class="pln">kata</span><span class="pun">.</span><span class="pln">fizzBuzz</span><span class="pun">(</span><span class="lit">3</span><span class="pun">)).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'Fizz'</span><span class="pun">);</span><span class="pln">
+
+expect</span><span class="pun">(</span><span class="pln">kata</span><span class="pun">.</span><span class="pln">fizzBuzz</span><span class="pun">(</span><span class="lit">0</span><span class="pun">)).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="pln"> </span><span class="str">''</span><span class="pln"> </span><span class="pun">);</span></pre>
+            <p>fizzBuzz.js</p>
+            <pre class="prettyprint prettyprinted"><span class="kwd">var</span><span class="pln"> fizzBuzz </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln"> test </span><span class="pun">){</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="str">"Fizz"</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></pre>
+        </div>
+
+
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-14">
+        <div class="deck-slide-scaler">
+            <h2>Refactor</h2>
+            <p>Spec</p>
+            <pre class="prettyprint prettyprinted"><span class="pln">expect</span><span class="pun">(</span><span class="pln">kata</span><span class="pun">.</span><span class="pln">fizzBuzz</span><span class="pun">(</span><span class="lit">3</span><span class="pun">)).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'Fizz'</span><span class="pun">);</span><span class="pln">
+
+expect</span><span class="pun">(</span><span class="pln">kata</span><span class="pun">.</span><span class="pln">fizzBuzz</span><span class="pun">(</span><span class="lit">0</span><span class="pun">)).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="pln"> </span><span class="str">''</span><span class="pln"> </span><span class="pun">);</span></pre>
+            <p>fizzBuzz.js</p>
+            <pre class="prettyprint prettyprinted"><span class="kwd">var</span><span class="pln"> fizzBuzz </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln"> test </span><span class="pun">){</span><span class="pln">
+  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln"> test </span><span class="pun">%</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="pun">===</span><span class="pln"> </span><span class="lit">0</span><span class="pln"> </span><span class="pun">){</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> </span><span class="str">'Fizz'</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> </span><span class="str">''</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></pre>
+        </div>
+
+
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-15">
+        <div class="deck-slide-scaler">
+            <div class="attn-box vcenter">
+                <p class="vcenter">
+                    Nobody actually has time for this, but its a noble goal to shoot for!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide deck-after" id="slide-16">
+        <div class="deck-slide-scaler">
+            <h1>Writing Testable JS Code</h1>
+        </div>
+    </section>
+
+    <section class="slide deck-after" id="slide-17">
+        <div class="deck-slide-scaler">
+            <h2>This is NOT testable</h2>
+            <pre class="prettyprint prettyprinted"><span class="pln">$</span><span class="pun">(</span><span class="pln">document</span><span class="pun">).</span><span class="pln">ready</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> div1 </span><span class="pun">=</span><span class="pln"> $</span><span class="pun">(</span><span class="str">'div.one'</span><span class="pun">),</span><span class="pln">
+      itemCount </span><span class="pun">=</span><span class="pln"> getItemCount</span><span class="pun">(</span><span class="pln"> </span><span class="str">'li.item'</span><span class="pln"> </span><span class="pun">);</span><span class="pln">
+
+  div1</span><span class="pun">.</span><span class="pln">on</span><span class="pun">(</span><span class="str">'click'</span><span class="pun">,</span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+
+  </span><span class="kwd">function</span><span class="pln"> getItemCount</span><span class="pun">(</span><span class="pln"> selector </span><span class="pun">){</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> $</span><span class="pun">(</span><span class="pln"> selector </span><span class="pun">).</span><span class="pln">length</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">});</span></pre>
+        </div>
+
+    </section>
+
+    <section class="slide deck-after" id="slide-18">
+        <div class="deck-slide-scaler">
+            <h2>Why not?</h2>
+            <ul>
+                <li>
+                    All the code is hidden in the <code class="prettyprint prettyprinted"><span class="pln">$</span><span class="pun">(</span><span class="pln">document</span><span class="pun">).</span><span class="pln">ready</span><span class="pun">()</span></code>                    closure.
+                </li>
+                <li class="slide deck-after" id="slide-19">
+                    The event handler is anonymous function passed directly into the <strong>on</strong> function.
+                </li>
+            </ul>
+        </div>
+
+    </section>
+
+    <section class="slide deck-after" id="slide-20">
+        <div class="deck-slide-scaler">
+            <h2>Moar Testable</h2>
+            <pre class="prettyprint prettyprinted"><span class="kwd">var</span><span class="pln"> app </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  init </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+     div1</span><span class="pun">.</span><span class="pln">on</span><span class="pun">(</span><span class="pln">
+        </span><span class="str">'click'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">handleDivClick
+     </span><span class="pun">);</span><span class="pln">
+
+     </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">itemCount </span><span class="pun">=</span><span class="pln"> 
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">getItemCount</span><span class="pun">(</span><span class="pln"> </span><span class="str">'li.item'</span><span class="pln"> </span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">},</span><span class="pln">
+
+  getItemCount </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln"> selector </span><span class="pun">){</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> $</span><span class="pun">(</span><span class="pln"> selector </span><span class="pun">).</span><span class="pln">length</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">},</span><span class="pln">
+
+  handleDivClick </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln"> e </span><span class="pun">){</span><span class="pln">
+    </span><span class="com">//this in here will still be div1</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">};</span></pre>
+        </div>
+
+    </section>
+
+    <section class="slide deck-after" id="slide-21">
+        <div class="deck-slide-scaler">
+            <h2>Moar Testable</h2>
+            <p>Now we can test our code to make sure:</p>
+            <ul>
+                <li>init set the click handler</li>
+                <li>init set the item count</li>
+                <li>getItemCount() returns what we expect</li>
+                <li>handleDivClick() does what we want</li>
+            </ul>
+            <p>Rebecca Murphey has an excellent presentation on "Writing Testable JavaScript" here: <a href="http://www.youtube.com/watch?v=OzjogCFO4Zo"
+                    target="_blank" wrc_done="true">http://www.youtube.com/watch?v=OzjogCFO4Zo</a><span class="wrc1 wrc_icon wrc_injected"></span></p>
+        </div>
+
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-22">
+        <div class="deck-slide-scaler">
+            <h1>Jasmine, so much more than a shrub.</h1>
+        </div>
+    </section>
+
+    <section class="slide deck-after" id="slide-23">
+        <div class="deck-slide-scaler">
+            <h1>Setup</h1>
+        </div>
+    </section>
+
+    <section class="slide deck-after" id="slide-24">
+        <div class="deck-slide-scaler">
+            <h2>Jasmine Setup</h2>
+            <ol>
+                <li>Download Jasmine <a href="https://github.com/pivotal/jasmine/downloads" wrc_done="true">here</a><span class="wrc1 wrc_icon wrc_injected"></span></li>
+                <li>Unzip it into a folder in your project (i like to use a tests folder inside my js folder)</li>
+                <li>Add your source files to SpecRunner.html</li>
+                <li>Create <strong>spec</strong> files and add them to SpecRunner.html</li>
+                <li>Open SpecRunner.html in a browser.</li>
+            </ol>
+        </div>
+
+    </section>
+
+    <section class="slide deck-after" id="slide-25">
+        <div class="deck-slide-scaler">
+            <h2>Folder Structure</h2>
+            <pre>js
+|--tests
+|  |--fixtures
+|  |--spec
+SpecRunner.html
+</pre>
+        </div>
+
+    </section>
+
+    <section class="slide deck-after" id="slide-26">
+        <div class="deck-slide-scaler">
+            <h2>SpecRunner.html</h2>
+            <pre class="prettyprint prettyprinted"><span class="com">&lt;!-- include source files here... --&gt;</span><span class="pln">
+</span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="pln"> 
+    </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"src/Player.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln">
+</span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="pln"> 
+    </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"src/Song.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln">
+
+</span><span class="com">&lt;!-- include spec files here... --&gt;</span><span class="pln">
+</span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="pln"> 
+    </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"spec/SpecHelper.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln">
+</span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="pln"> 
+    </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"spec/PlayerSpec.js"</span><span class="tag">&gt;&lt;/script&gt;</span></pre>
+        </div>
+
+    </section>
+
+    <section class="slide deck-after" id="slide-27">
+        <div class="deck-slide-scaler">
+            <h2>Failing Test Output</h2><img src="./Jasmine Presentation by nbagan_files/test.png" width="45%"></div>
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-28">
+        <div>
+            <h2>Failing Test Output</h2>
+            <p style="text-align:left">To show all tests click on the "5 Specs" text except "1 Failure".</p>
+            <img src="./Jasmine Presentation by nbagan_files/failure1.png" width="35%">
+            <img src="./Jasmine Presentation by nbagan_files/failure2.png">
+            <p style="text-align:left">This is helpful when you have a lot of tests and you want to only run the "Describe" that has a failing test.</p>
+        </div>
+
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-30">
+        <div class="deck-slide-scaler">
+            <h1>Specs</h1>
+        </div>
+    </section>
+
+    <section class="slide deck-after" id="slide-31">
+        <div class="deck-slide-scaler">
+            <h2>Specs</h2>
+            <ul>
+                <li>Spec files are where your tests live.</li>
+                <li>Typically a single spec will be written for each .js file in your app.</li>
+                <li><strong class="red">Describe</strong> blocks can be nested. As a rule of thumb I like to have nested
+                    <strong class="red">describe</strong> blocks when I have three or more <strong class="red">expect</strong>                    statements in an <strong class="red">it</strong> block.</li>
+            </ul>
+        </div>
+
+    </section>
+
+    <section class="slide deck-after" id="slide-32">
+        <div class="deck-slide-scaler">
+            <h2>Specs</h2>
+            <pre class="prettyprint prettyprinted"><span class="pln">describe</span><span class="pun">(</span><span class="str">'fizzbuzz'</span><span class="pun">){</span><span class="pln">
+
+  it</span><span class="pun">(</span><span class="pln">
+    </span><span class="str">'should return fizz when the number is divisible by 3'</span><span class="pun">,</span><span class="pln">
+    </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+
+      expect</span><span class="pun">(</span><span class="pln">
+        kata</span><span class="pun">.</span><span class="pln">fizzBuzz</span><span class="pun">(</span><span class="lit">3</span><span class="pun">)</span><span class="pln">
+      </span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'Fizz'</span><span class="pun">);</span><span class="pln"> </span><span class="com">//matcher</span><span class="pln">
+
+      expect</span><span class="pun">(</span><span class="pln">
+        kata</span><span class="pun">.</span><span class="pln">fizzBuzz</span><span class="pun">(</span><span class="lit">0</span><span class="pun">)</span><span class="pln">
+      </span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="pln"> </span><span class="str">''</span><span class="pln"> </span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+  
+</span><span class="pun">});</span></pre>
+        </div>
+
+    </section>
+
+    <section class="slide deck-after" id="slide-33">
+        <div class="deck-slide-scaler">
+            <h2>Test Setup &amp; Teardown</h2>
+            <pre class="prettyprint prettyprinted"><span class="pln">beforeEach</span><span class="pun">(</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(){</span><span class="pln">
+  </span><span class="com">//run before each "it"</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+afterEach</span><span class="pun">(</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(){</span><span class="pln">
+  </span><span class="com">//run after each "it"</span><span class="pln">
+</span><span class="pun">});</span></pre>
+        </div>
+
+    </section>
+
+
+    <section class="slide deck-after" id="slide-35">
+        <div>
+            <h2>Matchers</h2>
+            <pre class="prettyprint prettyprinted"><span class="pln">toBe</span><span class="pun">(</span><span class="pln"> </span><span class="str">'expected'</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//exact compare (===)</span></pre>
+            <pre class="prettyprint prettyprinted"><span class="pln">toEqual</span><span class="pun">(</span><span class="pln"> </span><span class="str">'expected'</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//more general compare, can compare objects</span></pre>
+            <pre class="prettyprint prettyprinted"><span class="pln">toBeUndefined</span><span class="pun">(</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//checks for undefined</span></pre>
+            <pre class="prettyprint prettyprinted"><span class="pln">toBeDefined</span><span class="pun">(</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//checks if var is not undefined</span></pre>
+            <pre class="prettyprint prettyprinted"><span class="pln">toMatch</span><span class="pun">(</span><span class="pln"> </span><span class="str">/regex/</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//matches against regex</span></pre>
+            <pre class="prettyprint prettyprinted"><span class="pln">toBeNull</span><span class="pun">(</span><span class="pln"> </span><span class="str">/regex/</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//checks if a var is null</span></pre>
+            <pre class="prettyprint prettyprinted"><span class="pln">toBeTruthy</span><span class="pun">(</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//checks if var is truthy</span></pre>
+            <pre class="prettyprint prettyprinted"><span class="pln">toBeFalsy</span><span class="pun">(</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//checks if var is falsy</span></pre>
+            <pre class="prettyprint prettyprinted"><span class="pln">toBeLessThan</span><span class="pun">(</span><span class="pln"> number </span><span class="pun">)</span><span class="pln"> </span><span class="com">//checks if value is less than number</span></pre>
+            <pre class="prettyprint prettyprinted"><span class="pln">toBeGreaterThan</span><span class="pun">(</span><span class="pln"> number </span><span class="pun">)</span><span class="pln"> </span><span class="com">//checks if value is greater than number</span></pre>
+            <pre class="prettyprint prettyprinted"><span class="pln">toContain</span><span class="pun">(</span><span class="pln"> item </span><span class="pun">)</span><span class="pln"> </span><span class="com">//look for item in array</span></pre>
+            <pre class="prettyprint prettyprinted"><span class="pln">expect</span><span class="pun">(</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln"> fn</span><span class="pun">();</span><span class="pln"> </span><span class="pun">}).</span><span class="pln">toThrow</span><span class="pun">(</span><span class="pln"> e </span><span class="pun">)</span><span class="pln"> </span><span class="com">//fn() should throw an error</span></pre>
+            <pre class="prettyprint prettyprinted"><span class="pln">expect</span><span class="pun">(</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="pun">).</span><span class="kwd">not</span><span class="pun">.</span><span class="pln">toEqual</span><span class="pun">(</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="pun">);</span></pre>
+        </div>
+
+
+    </section>
+
+
+    <section class="slide deck-after" id="slide-36">
+        <div class="deck-slide-scaler">
+            <h1>Making Asynchronous Testing With Jasmine Is Painful </h1>
+        </div>
+    </section>
+
+    <section class="slide deck-after" id="slide-32">
+        <div class="deck-slide-scaler">
+            <h2>Jasmine’s Async</h2>
+            <pre class="prettyprint prettyprinted"><span class="pln">describe</span><span class="pun">(</span><span class="str">'an async spec', function(</span><span class="pun">){</span><span class="pln">
+
+    beforeEach(function(){
+    var done = false;
+
+    function doStuff(){
+      // simulate async stuff and wait 10ms
+      setTimeout(function(){
+        done = true;
+      }, 10); 
+    }
+
+    runs(doStuff);
+
+    waitsFor(function(){
+      return done;
+    });
+  });
+
+  it("did stuff", function(){
+    expect(done).toBe(true);
+  });
+  </span></pre>
+            <p>This isn’t fun. That “runs” and “waitsFor” code gets repeated all over the place – every time you need to wait
+                for something async to complete</p>
+    </section>
+
+
+
+    <section class="slide deck-after" id="slide-37">
+        <div>
+            <h2>Now in current version of jasmine to use Jasmine.Async, you need to include the jasmine.async.js file in your
+                test suite</h2>
+            <pre class="prettyprint prettyprinted"><span class="pln">describe</span><span class="pun">(</span><span class="str">'an async spec', function(</span><span class="pun">){</span><span class="pln">
+
+   var foo = false,
+      async = new AsyncSpec(this);
+
+  async.beforeEach(function(done){
+
+    // simulate async stuff and wait 10ms
+    setTimeout(function(){
+      foo = true;
+      done();
+    }, 10); 
+
+  });
+
+  it("did stuff", function(){
+      expect(foo).toBe(true);
+  });
+
+});
+  </span></pre>
+            <p>There’s an “async.beforeEach”, “async.afterEach” and “async.it” – all of which are given the “done” callback.
+                This is so much more clean and easy to understand now.</p>
+            <p>Download Jasmine async <a href="https://github.com/derickbailey/jasmine.async" wrc_done="true">here</a>
+                <span class="wrc1 wrc_icon wrc_injected"></span>
+            </p>
+    </section>
+
+
+    <section class="slide deck-after" id="slide-38">
+        <div class="deck-slide-scaler">
+            <h2>Mocha Setup</h2>
+            <ol>
+                <li>Download Mocha <a href="http://mochajs.org/#getting-started" wrc_done="true">here</a><span class="wrc1 wrc_icon wrc_injected"></span></li>
+                <li>Make a directory called test</li>
+                <li>Add your source files to SpecRunner.html</li>
+                <li>Open it in desired editor</li>
+            </ol>
+        </div>
+
+    </section>
+
+    <section class="slide deck-after" id="slide-38">
+        <div class="deck-slide-scaler">
+            <h2>Jasmine vs. Mocha, Chai</h2>
+            <h3>API</h3>
+            <p>The APIs of Jasmine and Mocha are very similar. They both allow you to write your tests in the behaviour driven
+                development (BDD) style. You might ask, “What is BDD?”. In short, BDD is simply a style of writing tests
+                that focusses on the language used.</p>
+            <pre class="prettyprint prettyprinted"><span class="pln">describe</span><span class="pun">(</span><span class="str">'calculator', function(</span><span class="pun">){</span><span class="pln">
+
+    describe('add()', function() {
+    it('should add 2 numbers togoether', function() {
+      // assertions here
+    });
+  });
+});
+  </span></pre>
+        </div>
+
+    </section>
+
+    <section class="slide deck-after" id="slide-38">
+        <div class="deck-slide-scaler">
+            <h2>Assertions, or Expectations</h2>
+            <p>The assertions, or expectations as they are often called, are where things start to differ. Mocha does not have
+                a built in assertion library. There are several options though for both Node and the browser: Chai, should.js,
+                expect.js, and better-assert. A lot of developers choose Chai as their assertion library. Because none of
+                these assertion libraries come with Mocha, this is another thing you will need to load into your test harness.
+                Chai comes with three different assertion flavors. It has the should style, the expect style, and the assert
+                style. The expect style is similar to what Jasmine provides. For example, if you want to write an expectation
+                that verifies calculator.add(1, 4) equals 5, this is how you would do it with both Jasmine and Chai:</p>
+            <div>
+                <h3>Jasmine</h3>
+                <pre class="prettyprint prettyprinted">expect(calculator.add(1, 4)).toEqual(5);
+  </span></pre>
+            </div>
+            <div>
+                <h3>Chai</h3>
+                <pre class="prettyprint prettyprinted">expect(calculator.add(1, 4)).to.equal(5);
+  </span></pre>
+                <p>Pretty similar right? If you are switching from Jasmine to Mocha, the path with the easiest learning curve
+                    is to use Chai with the expect style.</p>
+            </div>
+        </div>
+
+    </section>
+
+
+    <section class="slide deck-after" id="slide-39">
+        <div>
+            <h2>Asynchronous Tests</h2>
+            <h3>Asynchronous testing in Jasmine 2.x and Mocha is the same.</h3>
+            <pre class="prettyprint prettyprinted">
+    it('should resolve with the User object', function(done) {
+        var dfd = new $.Deferred();
+        var promise = dfd.promise();
+        var stub = sinon.stub(User.prototype, 'fetch').returns(promise);
+
+        dfd.resolve({ name: 'David' });
+
+    User.get().then(function(user) {
+        expect(user instanceof User).toBe(true);
+        done();
+        });
+    });
+  </span></pre>
+            <p>Above, User is a constructor function with a static method get. Behind the scenes, get uses fetch which performs
+                the XHR request. I want to assert that when get resolves successfully, the resolved value is an instance
+                of User. Because I have stubbed out User.prototype.fetch to return a pre-resolved promise, no real AJAX request
+                is made. However, this code is still asynchronous. By simply specifying a parameter in the it callback function
+                (I have called it done like in the documentation but you can call it whatever you want), the test runner
+                will pass in a function and wait for this function to execute before ending the test. The test will timeout
+                and error if done is not called within a certain time limit. This gives you full control on when your tests
+                complete. The above test would work in both Mocha and Jasmine 2.x</p>
+
+    </section>
+
+    <section class="slide deck-after" id="slide-40">
+        <div>
+            <h2>Jasmine 1.3 Asynchronous Test</h2>
+
+            <pre class="prettyprint prettyprinted">
+    it('should resolve with the User object', function() {
+         var flag = false;
+         var david;
+
+        runs(function() {
+            var dfd = new $.Deferred();
+            var promise = dfd.promise();
+
+        dfd.resolve({ name: 'David' });
+        spyOn(User.prototype, 'fetch').andReturn(promise);
+
+        User.get().then(function(user) {
+         flag = true;
+         david = user;
+        });
+    });
+
+    waitsFor(function() {
+      return flag;
+    }, 'get should resolve with the model', 500);
+
+    runs(function() {
+      expect(david instanceof User).toBe(true);
+    });
+});
+  </span></pre>
+            <p>In this Jasmine 1.3 asynchronous test example, Jasmine will wait a maximum of 500 milliseconds for the asynchronous
+                operation to complete. Otherwise, the test will fail. waitsFor() is constantly checking to see if flag becomes
+                true. Once it does, it will continue to run the next runs() block where I have my assertion.</p>
+
+    </section>
+
+    <section class="slide deck-after" id="slide-41">
+        <div>
+            <h2>Difference b/w Jasmine and Mocha</h2>
+            <h3>One feature that Mocha(Sinon) has that Jasmine does not is a fake server. This allows you to setup fake responses
+                to AJAX requests made for certain URLs.</h3>
+            <pre class="prettyprint prettyprinted">
+   it('should return a collection object containing all users', function(done) {
+    var server = sinon.fakeServer.create();
+    server.respondWith("GET", "/users", [
+        200,
+        { "Content-Type": "application/json" },
+        '[{ "id": 1, "name": "Gwen" },  { "id": 2, "name": "John" }]'
+    ]);
+
+    Users.all().done(function(collection) {
+        expect(collection.toJSON()).to.eql([
+        { id: 1, name: "Gwen" },
+        { id: 2, name: "John" }
+    ]);
+
+        done();
+  });
+    server.respond();
+    server.restore();
+});
+  </span></pre>
+            <p>In the above example, if a GET request is made to /users, a 200 response containing two users, Gwen and John,
+                will be returned. This can be really handy for a few reasons. First, it allows you to test your code that
+                makes AJAX calls regardless of which AJAX library you are using. Second, you may want to test a function
+                that makes an AJAX call and does some preprocessing on the response before the promise resolves</p>
+
+            <h3>Sinon’s fake server is similar to the $httpBackend service provided in angular mocks.</h3>
+    </section>
+
+
+    <section class="slide deck-after" id="slide-42">
+        <div class="deck-slide-scaler">
+            <h2>NightwatchJS</h2>
+            <img src="./Jasmine Presentation by nbagan_files/nightwatch.png">
+
+            <h3>Nightwatch.js is an easy to use Node.js based Endto- End (E2E) testing solution for browser based apps and websites.
+                It uses the powerful Selenium WebDriver API to perform commands and assertions on DOM elements.</h3>
+        </div>
+    </section>
+
+    <section class="slide deck-after" id="slide-42">
+        <div class="deck-slide-scaler">
+            <h2>Theory of Operation</h2>
+            <p>Nightwatch works by communicating over a restful HTTP api with a WebDriver server (typically the Selenium server).
+                The restful API protocol is defined by the W3C WebDriver API. See below for an example workflow for browser
+                initialization.
+            </p>
+            <img src="./Jasmine Presentation by nbagan_files/nightwatch&webdriver.PNG">
+            <h3>Overview of WebDriver</h3>
+            <p>WebDriver is a general purpose library for automating web browsers. It was started as part of the Selenium project,
+                which is a very popular and comprehensive set of tools for browser automation, initially written for Java
+                but now with support for most programming languages. Nightwatch uses the WebDriver API to perform the browser
+                automation related tasks, like opening windows and clicking links for instance. WebDriver is now a W3C specification,
+                which aims to standardize browser automation. WebDriver is a remote control interface that enables introspection
+                and control of user agents. It provides a platform and a restful HTTP api as a way for web browsers to be
+                remotely controlled</p>
+        </div>
+    </section>
+
+    <section class="slide deck-after" id="slide-43">
+        <div class="deck-slide-scaler">
+            <h2>Features</h2>
+            <ul>
+                <li>Good documentation</li>
+                <li>Use CSS or XPATH selectors</li>
+                <li>Test runner can execute sequentially or in parallel</li>
+                <li>Test filtering by file name pattern, folders and tags</li>
+                <li>SauceLabs + BrowserStack support</li>
+                <li>Extension model for custom commands</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="slide deck-after" id="slide-43">
+        <div class="deck-slide-scaler">
+            <h2>Installation</h2>
+            <h3>To install Nightwatch.js you need two things:</h3>
+            <ul>
+                <li>A Selenium server <a href="http://www.seleniumhq.org/download/" wrc_done="true">here</a><span class="wrc1 wrc_icon wrc_injected"></span></li>
+                <li>Install Node.js <a href="https://nodejs.org/en/" wrc_done="true">here</a><span class="wrc1 wrc_icon wrc_injected"></span></li>
+                <li>Nightwatch.js test runner</li>
+            </ul>
+            <p>The first one can be installed by installing webdriver-manager, the second one by installing nightwatch itself:</p>
+            <pre class="prettyprint prettyprinted">
+ npm install -g nightwatch webdriver-manager
+        </span></pre>
+            <p>Now update and install the Selenium server by executing the following commands:</p>
+            <pre class="prettyprint prettyprinted">
+ webdriver-manager update
+ webdriver-manager start
+  </span></pre
+  <p>Install Nightwatch</p>
+    <pre class="prettyprint prettyprinted">
+ npm install [-g] nightwatch
+  </span></pre
+        </div>
+    </section>
+
+     <section class="slide deck-after" id="slide-44">
+        <div>
+            <h2>Configuration</h2>
+            <p>
+The test runner expects a configuration file to be passed, using by default a nightwatch.json file from the current directory, if present. A nightwatch.conf.js file will also be loaded by default, if found</p>
+            <pre class="prettyprint prettyprinted">
+    {
+    "src_folders" : ["tests"],
+    "output_folder" : "reports",
+    "selenium" : {
+        "start_process" : false,
+        "server_path" : "",
+        "log_path" : "",
+        "port" : 4444,
+        "cli_args" : {
+        "webdriver.chrome.driver" : "",
+        "webdriver.gecko.driver" : "",
+        "webdriver.edge.driver" : ""
+        }
+    },
+
+    "test_settings" : {
+        "default" : {
+        "launch_url" : "http://localhost",
+        "selenium_port"  : 4444,
+        "selenium_host"  : "localhost",
+        "silent": true,
+        "screenshots" : {
+            "enabled" : false,
+            "path" : ""
+        },
+        "desiredCapabilities": {
+            "browserName": "firefox",
+            "marionette": true
+        }
+        },
+
+        "chrome" : {
+        "desiredCapabilities": {
+            "browserName": "chrome"
+        }
+        },
+
+        "edge" : {
+        "desiredCapabilities": {
+            "browserName": "MicrosoftEdge"
+        }
+        }
+    }
+    }
+        </span></pre>
+        </div>
+    </section>
+
+    <section class="slide deck-after" id="slide-45">
+        <div>
+            <h2>Example 1 with hardcoded value</h2>
+            <pre class="prettyprint prettyprinted">
+    module.exports = {
+        'Google Webtechcon' : function (client) {
+        client
+        .url('http://www.google.com')
+        .waitForElementVisible('body', 1000)
+        .assert.title('Google')
+        .assert.visible('input[type=text]')
+        .setValue('input[type=text]', 'webtechcon')
+        .waitForElementVisible('button[name=btnG]', 1000)
+        .click('button[name=btnG]')
+        .pause(1000)
+        .assert.containsText('#rso > div.g > div > div > h3 > a',
+        'WebTech Conference 2016')
+        .end();
+        }
+    };
+        </span></pre>
+            <h3>Run Nightwatch</h3>
+            <pre class="prettyprint prettyprinted">
+    nightwatch --config tests/nightwatch.json --env chrome --test tests/e2e/overview.spec.e2e.js 
+        </span></pre>
+        </div>
+    </section>
+
+    <section class="slide deck-after" id="slide-46">
+        <div>
+            <h2>Example 2 Using globals</h2>
+            <h3>Define globals</h3>
+            <pre class="prettyprint prettyprinted">
+    module.exports = {
+        url: 'http://www.google.com',
+        selectors: {
+        'searchField': 'input[type=text]'
+        },
+        static: {
+        'pageTitle': 'Google'
+        }
+    }
+Save as data/google.js
+        </span></pre>
+            <h3>Add to config (test-settings)</h3>
+            <pre class="prettyprint prettyprinted">
+    "globals": require('./data/google')
+        </span></pre>
+            <pre class="prettyprint prettyprinted">
+    "module.exports = {
+        'Google Webtechcon' : function (client) {
+        var globals = client.globals;
+        client
+        .url(globals.url)
+        .waitForElementVisible('body', 1000)
+        .assert.title(globals.static.pageTitle)
+        .assert.visible(globals.selectors.searchField)
+        .end();
+        }
+    };
+        </span></pre>
+        </div>
+
+    </section>
+
+    <section class="slide deck-after" id="slide-47">
+        <div>
+            <h2>Live Environment test code 1</h2>
+            <pre class="prettyprint prettyprinted">
+module.exports = {
+  "Does not show the task list if there are no tasks": function(client) {
+    client
+      .url("http://business.nasdaq.com/")
+      .waitForElementVisible(".container-fluid", 1000)
+      .waitForElementVisible(".navbar-form a", 1000)
+      .click(".navbar-form a")
+      .pause(1000)
+      .setValue(".navbar-form input[type=text]", "nasdaq")
+      .pause(1000)
+      .click(".input-group-addon")
+      .pause(1000)
+      .click(".navbar-toggle")
+      .pause(1000)
+      .assert.cssProperty("#nasdaq-menu", "display", "block")
+      .waitForElementVisible(".sidr-class-b-close", 1000)
+      .click(".sidr-class-b-close")
+      .pause(1000)
+      .assert.cssProperty("#nasdaq-menu", "display", "none")
+      .pause(1500)
+      .assert.containsText(
+        "#t-insights-block .t-insights__news h5",
+        "TODAY'S INSIGHTS"
+      )
+      .pause(1000);
+  },
+        </span></pre>
+        </div>
+    </section>
+
+
+    <section class="slide deck-after" id="slide-48">
+        <div>
+            <h2>Commands</h2>
+                <table>
+                <tr>
+                    <td>clearValue</td>
+                    <td>click</td>
+                    <td>deleteCookie</td>
+                    <td>deleteCookies</td>
+                     <td>end</td>
+                    <td>getAttribute</td>
+                    <td>getCookie</td>
+                    <td>getCookies</td>
+                    <td>switchWindow</td>
+                </tr>
+                <tr>
+                    <td>getTagName</td>
+                    <td>getText</td>
+                    <td>getTitle</td>
+                    <td>getValue</td>
+                    <td>init</td>
+                    <td>injectScript</td>
+                    <td>isVisible</td>
+                    <td>urlHash</td>
+                    <td>waitForElementNotPresent</td>
+                </tr>
+                <tr>
+                    <td>waitForElementNotVisible</td>
+                    <td>maximizeWindow</td>
+                    <td>moveToElement</td>
+                    <td>pause</td>
+                    <td>resizeWindow</td>
+                    <td>saveScreenshot</td>
+                    <td>setCookie</td>
+                    <td>setValue</td>
+                    <td>submitForm</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <section class="slide deck-after" id="slide-49">
+        <div>
+            <h2>Assertions</h2>
+                <table>
+                <tr>
+                    <td>attributeEquals</td>
+                    <td>containsText</td>
+                    <td>cssClassPresent</td>
+                    <td>cssClassNotPresent</td>
+                     <td>cssProperty</td>
+                    <td>elementPresent</td>
+                   
+                </tr>
+                <tr>
+                    <td>urlContains</td>
+                    <td>value</td>
+                    <td>valueContains</td>
+                     <td>elementNotPresent</td>
+                    <td>hidden</td>
+                    <td>title</td>  
+                </tr>
+            </table>
+        </div>
+    </section>
+
+<section class="slide deck-after" id="slide-50">
+        <div>
+            <h2>more to explore</h2>
+            <ul>
+                <li>before and after test hooks!</li>
+                <li>create custom commands!</li>
+                <li>take screenshots!</li>
+                <li>create custom assertions!</li>
+                <li>use sauce labs to run tests!</li>
+                <li>use tags to organize test suites!</li>
+            </ul>
+        </div>
+    </section>
+    <section class="slide deck-after" id="slide-51">
+        <div>
+            <h2>Live Environment test code 2</h2>
+            <pre class="prettyprint prettyprinted">
+module.exports = {
+  "Does not show the task list if there are no tasks": function(client) {
+    "exprected results": function(client) {
+        client.elements("css selector", ".navbar-nav li", function(result) {
+        result.value.map(function(v, k) {
+            client.elementIdAttribute(v.ELEMENT, "data-evar47", function(res) {
+            // true
+            console.log(res.value);
+            });
+        });
+        });
+        client.pause(1500);
+
+        client.expect.element(".navbar-nav li: first-child:hover");
+        client.pause(1000);
+        client.expect.element(".navbar-nav li: first-child").to.have.css("active");
+        client.pause(1500);
+    }
+    };
+  },
+        </span></pre>
+        </div>
+    </section>
+
+    <section class="slide deck-after" id="slide-52">
+        <div class="deck-slide-scaler">
+            <h2>Matchers</h2>
+            <pre class="prettyprint prettyprinted"><span class="pln">toBe</span><span class="pun">(</span><span class="pln"> $</span><span class="pun">(</span><span class="str">'jQuerySelector'</span><span class="pun">)</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//compares results of one selector to another</span></pre>
+            <pre class="prettyprint slide prettyprinted deck-after" id="slide-53"><span class="pln">toBeChecked</span><span class="pun">(</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//radios and checkboxes</span></pre>
+        </div>
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-54">
+        <div class="deck-slide-scaler">
+            <h2>Matchers</h2>
+            <pre class="prettyprint prettyprinted"><span class="pln">toBeHidden</span><span class="pun">(</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//display:none, hidden form elements, with &amp; height = 0</span></pre>
+            <pre class="prettyprint slide prettyprinted deck-after" id="slide-55"><span class="pln">toBeVisible</span><span class="pun">(</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//checks for element to consume space on the document</span></pre>
+        </div>
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-56">
+        <div class="deck-slide-scaler">
+            <h2>Matchers</h2>
+            <pre class="prettyprint prettyprinted"><span class="pln">toBeSelected</span><span class="pun">(</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//only for elements with selected attribute</span></pre>
+            <pre class="prettyprint slide prettyprinted deck-after" id="slide-57"><span class="pln">toHaveCss</span><span class="pun">(</span><span class="pln"> </span><span class="str">'css'</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//pass in css like calling the jQuery css() fn</span></pre>
+        </div>
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-58">
+        <div class="deck-slide-scaler">
+            <h2>Matchers</h2>
+            <pre class="prettyprint prettyprinted"><span class="pln">toHaveAttr</span><span class="pun">(</span><span class="pln"> </span><span class="str">'attrName'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'attrValue'</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//checks for attribute on element</span></pre>
+            <pre class="prettyprint slide prettyprinted deck-after" id="slide-59"><span class="pln">toConatin</span><span class="pun">(</span><span class="pln"> $</span><span class="pun">(</span><span class="str">'jQuerySelector'</span><span class="pun">)</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//checks if selector is in children</span></pre>
+        </div>
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-60">
+        <div class="deck-slide-scaler">
+            <h2>Matchers</h2>
+            <pre class="prettyprint prettyprinted"><span class="pln">toHaveValue</span><span class="pun">(</span><span class="pln"> value </span><span class="pun">)</span><span class="pln"> </span><span class="com">//checks if element has the value attribute equal to the value passed in</span></pre>
+            <pre class="prettyprint slide prettyprinted deck-after" id="slide-61"><span class="pln">toHaveText</span><span class="pun">(</span><span class="pln"> </span><span class="str">'text'</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//checks if element has text</span></pre>
+        </div>
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-62">
+        <div class="deck-slide-scaler">
+            <h2>Matchers</h2>
+            <pre class="prettyprint prettyprinted"><span class="pln">toHaveId</span><span class="pun">(</span><span class="pln"> </span><span class="str">'id'</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//checks if element has id</span></pre>
+            <pre class="prettyprint slide prettyprinted deck-after" id="slide-63"><span class="pln">toHaveHtml</span><span class="pun">(</span><span class="pln"> </span><span class="str">'html'</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//checks if element has html</span></pre>
+        </div>
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-64">
+        <div class="deck-slide-scaler">
+            <h2>Matchers</h2>
+            <pre class="prettyprint prettyprinted"><span class="pln">toHandle</span><span class="pun">(</span><span class="pln"> </span><span class="str">'eventname'</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//checks if element listens for event</span></pre>
+            <pre class="prettyprint slide prettyprinted deck-after" id="slide-65"><span class="pln">toBeFocused</span><span class="pun">(</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="com">//checks if element has focus</span></pre>
+        </div>
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-66">
+        <div class="deck-slide-scaler">
+            <h2>Matchers</h2>
+            <h4>For a full list visit <a href="http://nightwatchjs.org/api" target="_blank" wrc_done="true">http://nightwatchjs.org/api</a>
+                <span class="wrc1 wrc_icon wrc_injected"></span>
+            </h4>
+        </div>
+
+    </section>
+
+    <section class="slide deck-after" id="slide-67">
+        <div class="deck-slide-scaler">
+            <h1>Fixtures</h1>
+        </div>
+    </section>
+
+    <section class="slide deck-after" id="slide-68">
+        <div class="deck-slide-scaler">
+            <h2>Fixtures</h2>
+            <ul>
+                <li>Jasmine jQuery provides a powerful api for injecting HTML content into your tests.</li>
+                <li>This allows your jQuery code to have DOM elements to run against.</li>
+                <li>Fixtures are stored in separate HTML files.</li>
+            </ul>
+        </div>
+
+    </section>
+
+    <section class="slide deck-after" id="slide-69">
+        <div class="deck-slide-scaler">
+            <h2>Setting Up Fixtures</h2>
+            <p>Jasmine jQuery assumes that they are in the path:</p>
+            <pre>spec/javascripts/fixtures</pre>
+        </div>
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-70">
+        <div class="deck-slide-scaler">
+            <h2>Setting Up Fixtures</h2>
+            <p>This path can be overridden by adding the following code to the SpecRunner.html file:</p>
+            <pre class="prettyprint prettyprinted"><span class="pun">(</span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+    </span><span class="com">//this loads fixtures from a fixtures folder </span><span class="pln">
+    </span><span class="com">//relative to where SpecRunner.html lives</span><span class="pln">
+    jasmine</span><span class="pun">.</span><span class="pln">getFixtures</span><span class="pun">()</span><span class="pln">
+        </span><span class="pun">.</span><span class="pln">fixturesPath </span><span class="pun">=</span><span class="pln"> </span><span class="str">'fixtures/'</span><span class="pun">;</span><span class="pln"> 
+    
+    </span><span class="kwd">var</span><span class="pln"> jasmineEnv </span><span class="pun">=</span><span class="pln"> jasmine</span><span class="pun">.</span><span class="pln">getEnv</span><span class="pun">();</span><span class="pln">
+
+    jasmineEnv</span><span class="pun">.</span><span class="pln">updateInterval </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1000</span><span class="pun">;</span></pre>
+        </div>
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-71">
+        <div class="deck-slide-scaler">
+            <h2>Loading Fixtures</h2>
+            <pre class="prettyprint prettyprinted"><span class="pln"> beforeEach</span><span class="pun">(</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+    </span><span class="com">//fixture will be reset before each test</span><span class="pln">
+    loadFixtures</span><span class="pun">(</span><span class="pln"> </span><span class="str">'appFixture.html'</span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln"> </span><span class="pun">);</span></pre>
+        </div>
+
+    </section>
+
+    <section class="slide deck-after" id="slide-72">
+        <div class="deck-slide-scaler">
+            <h1>runs / waits</h1>
+        </div>
+    </section>
+
+    <section class="slide deck-after" id="slide-73">
+        <div class="deck-slide-scaler">
+            <h2>Runs / Waits</h2>
+            <p>What if you have code like this?</p>
+            <pre class="prettyprint prettyprinted"><span class="pln">hide </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+    $</span><span class="pun">(</span><span class="str">'.hidden'</span><span class="pun">).</span><span class="pln">slideDown</span><span class="pun">(</span><span class="lit">5000</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">}</span></pre>
+        </div>
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-74">
+        <div class="deck-slide-scaler">
+            <h2>runs / waits</h2>
+            <p>Jasmine provides us with <strong class="red">runs</strong> and <strong class="red">waits</strong> functions for
+                this:
+            </p>
+            <pre class="prettyprint prettyprinted"><span class="pln">runs</span><span class="pun">(</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln"> myObject</span><span class="pun">.</span><span class="pln">hide</span><span class="pun">()</span><span class="pln"> </span><span class="pun">});</span><span class="pln"> </span><span class="com">//technically doesn't have to be in runs, but it better describe the intent</span><span class="pln">
+
+waits</span><span class="pun">(</span><span class="pln"> </span><span class="lit">5100</span><span class="pln"> </span><span class="pun">);</span><span class="pln">
+
+runs</span><span class="pun">(</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+    expect</span><span class="pun">(</span><span class="pln"> $</span><span class="pun">(</span><span class="str">'.hidden'</span><span class="pun">)</span><span class="pln"> </span><span class="pun">).</span><span class="kwd">not</span><span class="pun">.</span><span class="pln">toBeVisible</span><span class="pun">();</span><span class="pln">
+</span><span class="pun">});</span></pre>
+        </div>
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-75">
+        <div class="deck-slide-scaler">
+            <h2>runs / waits</h2>
+            <p>When you have runs / waits functions Jasmine <strong class="red">runs</strong> the first function, <strong class="red">waits</strong>                the duration of the waits function call, then calls the next <strong class="red">runs</strong> function.</p>
+            <p>Good for jQuery animations, setTimeouts, setIntervals, or any other asynchronous and timed code.</p>
+        </div>
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-76">
+        <div class="deck-slide-scaler">
+            <h1>Spies</h1>
+        </div>
+    </section>
+
+    <section class="slide deck-after" id="slide-77">
+        <div class="deck-slide-scaler">
+            <h2>Spies</h2>
+            <p>Spies are utilities provided by jasmine to make sure a callback function has been called.</p>
+            <p>The following code is a good canidate for a spy:</p>
+            <pre class="prettyprint prettyprinted"><span class="pln">hide </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> $ele </span><span class="pun">=</span><span class="pln"> $</span><span class="pun">(</span><span class="str">'.hideMe'</span><span class="pun">),</span><span class="pln">
+        </span><span class="kwd">self</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">;</span><span class="pln">
+
+    $ele</span><span class="pun">.</span><span class="pln">fadeOut</span><span class="pun">(</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+        </span><span class="kwd">self</span><span class="pun">.</span><span class="pln">showOtherDiv
+    </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">}</span></pre>
+        </div>
+
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-78">
+        <div class="deck-slide-scaler">
+            <h2>Spies</h2>
+            <p>To use it we tell Jasmine to <strong class="red">spyOn</strong> something. By default they are similar to mocks
+                in other unit testing frameworks.</p>
+            <pre class="prettyprint prettyprinted"><span class="pln">it</span><span class="pun">(</span><span class="str">'must call the success callback'</span><span class="pun">,</span><span class="pln"> 
+    </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+        </span><span class="com">//overwrites showOtherDiv with the spy</span><span class="pln">
+        spyOn</span><span class="pun">(</span><span class="pln"> myObj</span><span class="pun">,</span><span class="pln"> </span><span class="str">'showOtherDiv'</span><span class="pln"> </span><span class="pun">);</span><span class="pln"> 
+
+        expect</span><span class="pun">(</span><span class="pln"> myObj</span><span class="pun">.</span><span class="pln">showOtherDiv </span><span class="pun">)</span><span class="pln">
+            </span><span class="pun">.</span><span class="pln">toHaveBeenCalled</span><span class="pun">();</span><span class="pln"> 
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">);</span></pre>
+        </div>
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-79">
+        <div class="deck-slide-scaler">
+            <h2>Spy Matchers</h2>
+            <pre class="prettyprint prettyprinted"><span class="pln">expect</span><span class="pun">(</span><span class="pln"> myObj</span><span class="pun">.</span><span class="pln">showOtherDiv </span><span class="pun">).</span><span class="pln">toHaveBeenCalled</span><span class="pun">();</span><span class="pln"> 
+</span><span class="com">//validates that the method was called</span></pre>
+            <pre class="prettyprint slide prettyprinted deck-after" id="slide-80"><span class="pln">expect</span><span class="pun">(</span><span class="pln"> myObj</span><span class="pun">.</span><span class="pln">showOtherDiv </span><span class="pun">)</span><span class="pln">
+    </span><span class="pun">.</span><span class="pln">toHaveBeenCalledWith</span><span class="pun">(</span><span class="pln"> args </span><span class="pun">);</span><span class="pln">
+</span><span class="com">//validates that the method was called with specific arguments</span></pre>
+        </div>
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-81">
+        <div class="deck-slide-scaler">
+            <h2>Spy Metadata</h2>
+            <ul>
+                <li>Spies have metadata that can be used in tests</li>
+            </ul>
+            <pre class="prettyprint prettyprinted"><span class="pln">myObj</span><span class="pun">.</span><span class="pln">showOtherDiv</span><span class="pun">.</span><span class="pln">calls</span><span class="pun">.</span><span class="pln">length </span><span class="com">//number of times called</span></pre>
+            <pre class="prettyprint prettyprinted"><span class="pln">expect</span><span class="pun">(</span><span class="pln"> myObj</span><span class="pun">.</span><span class="pln">showOtherDiv</span><span class="pun">.</span><span class="pln">calls</span><span class="pun">.</span><span class="pln">length </span><span class="pun">)</span><span class="pln">
+    </span><span class="pun">.</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">2</span><span class="pun">)</span></pre>
+        </div>
+
+
+
+    </section>
+    <section class="slide deck-after" id="slide-82">
+        <div class="deck-slide-scaler">
+            <h2>Spy Metadata</h2>
+            <pre class="prettyprint prettyprinted"><span class="pln">myObj</span><span class="pun">.</span><span class="pln">showOtherDiv</span><span class="pun">.</span><span class="pln">calls </span><span class="com">//array of calls</span></pre>
+            <pre class="prettyprint slide prettyprinted deck-after" id="slide-83"><span class="pln">myObj</span><span class="pun">.</span><span class="pln">showOtherDiv</span><span class="pun">.</span><span class="pln">calls</span><span class="pun">[</span><span class="lit">0</span><span class="pun">].</span><span class="pln">args </span><span class="com">//array of args</span></pre>
+            <pre class="prettyprint slide prettyprinted deck-after" id="slide-84"><span class="pln">myObj</span><span class="pun">.</span><span class="pln">showOtherDiv</span><span class="pun">.</span><span class="pln">mostRecentCall </span><span class="com">//get last call, has same metadata as other calls</span></pre>
+        </div>
+
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-85">
+        <div class="deck-slide-scaler">
+            <h2>Extending Spies</h2>
+            <p>Spies can be extended to make your tests more powerful.</p>
+            <pre class="prettyprint slide prettyprinted deck-after" id="slide-86"><span class="pln">spyOn</span><span class="pun">(</span><span class="pln"> myObj</span><span class="pun">,</span><span class="pln"> </span><span class="str">'populateData'</span><span class="pln"> </span><span class="pun">)</span><span class="pln">
+    </span><span class="pun">.</span><span class="pln">andCallThrough</span><span class="pun">();</span><span class="pln"> </span><span class="com">//will create the spy but also call the original function</span></pre>
+            <pre class="prettyprint slide prettyprinted deck-after" id="slide-87"><span class="pln">spyOn</span><span class="pun">(</span><span class="pln"> myObj</span><span class="pun">,</span><span class="pln"> </span><span class="str">'populateData'</span><span class="pln"> </span><span class="pun">)</span><span class="pln">
+    </span><span class="pun">.</span><span class="pln">andReturn</span><span class="pun">(</span><span class="pln"> </span><span class="str">'foobar'</span><span class="pln"> </span><span class="pun">);</span><span class="pln"> </span><span class="com">//simlar to a stub in other unit testing frameworks</span></pre>
+        </div>
+
+
+
+    </section>
+
+    <section class="slide deck-after" id="slide-88">
+        <div class="deck-slide-scaler">
+            <h1>Questions?</h1>
+        </div>
+    </section>
+
+    <section class="slide deck-after" id="slide-89">
+        <div class="deck-slide-scaler">
+            <h1>The End.</h1>
+        </div>
+    </section>
+    <!-- End slides. -->
+
+
+    <!-- Begin extension snippets. Add or remove as needed. -->
+
+    <!-- deck.navigation snippet -->
+    <a href="http://bittersweetryan.github.io/jasmine-presentation/#" class="deck-prev-link deck-nav-disabled" title="Previous">←</a>
+    <a href="http://bittersweetryan.github.io/jasmine-presentation/#slide-1" class="deck-next-link" title="Next">→</a>
+
+    <!-- deck.status snippet -->
+    <p class="deck-status">
+        <span class="deck-status-current">1</span> /
+        <span class="deck-status-total">90</span>
+    </p>
+
+    <!-- deck.goto snippet -->
+
+
+    <!-- deck.hash snippet -->
+    <a href="http://bittersweetryan.github.io/jasmine-presentation/#slide-0" title="Permalink to this slide" class="deck-permalink">#</a>
+
+    <!-- End extension snippets. -->
+
+
+    <!-- Required JS files. -->
+    <script src="./Jasmine Presentation by nbagan_files/jquery-1.7.2.min.js"></script>
+
+    <!-- Extension JS files. Add or remove as needed. -->
+    <script src="./Jasmine Presentation by nbagan_files/deck.core.js"></script>
+    <script src="./Jasmine Presentation by nbagan_files/deck.hash.js"></script>
+    <script src="./Jasmine Presentation by nbagan_files/deck.menu.js"></script>
+    <script src="./Jasmine Presentation by nbagan_files/deck.goto.js"></script>
+    <script src="./Jasmine Presentation by nbagan_files/deck.status.js"></script>
+    <script src="./Jasmine Presentation by nbagan_files/deck.navigation.js"></script>
+    <script src="./Jasmine Presentation by nbagan_files/deck.scale.js"></script>
+
+    <script type="text/javascript" src="./Jasmine Presentation by nbagan_files/prettify.js"></script>
+
+    <!-- Initialize the deck. You can put this in an external file if desired. -->
+    <script>
+        $(function () {
+            prettyPrint();
+            $.deck('.slide');
+        });
+    </script>
+
+
+</body>
+
+</html>
