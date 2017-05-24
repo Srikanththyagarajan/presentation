@@ -1,0 +1,491 @@
+/* line 10, granite.scss */
+.deck-container {
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 1.75em;
+  background: url("granite-images/cardboard_flat.png");
+}
+/* line 17, granite.scss */
+.deck-container .slide h1 {
+  color: #424242;
+  text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.9);
+}
+/* line 22, granite.scss */
+.deck-container .slide h2 {
+  color: #424242;
+  border-bottom-color: #CCC;
+  text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.9);
+}
+/* line 27, granite.scss */
+.deck-container .slide h2 .red {
+  color: #890000;
+}
+/* line 31, granite.scss */
+.deck-container .slide h2 .green {
+  color: #0c580c;
+}
+/* line 36, granite.scss */
+.deck-container .slide h3 {
+  color: #888;
+}
+/* line 39, granite.scss */
+.deck-container .slide h3 strong {
+  font-weight: 900;
+  color: #890000;
+}
+/* line 45, granite.scss */
+.deck-container .slide pre {
+  border-color: #ccc;
+  background-color: #FFF;
+  padding: .5em;
+}
+/* line 51, granite.scss */
+.deck-container .slide code {
+  color: #888;
+}
+/* line 55, granite.scss */
+.deck-container .slide blockquote {
+  font-size: 2em;
+  font-style: italic;
+  padding: 1em 2em;
+  color: #000;
+  border-left: 5px solid #ccc;
+}
+/* line 62, granite.scss */
+.deck-container .slide blockquote p {
+  margin: 0;
+}
+/* line 66, granite.scss */
+.deck-container .slide blockquote cite {
+  font-size: .5em;
+  font-style: normal;
+  font-weight: bold;
+  color: #888;
+}
+/* line 74, granite.scss */
+.deck-container .slide ::-moz-selection {
+  background: #c00;
+  color: #fff;
+}
+/* line 75, granite.scss */
+.deck-container .slide ::selection {
+  background: #c00;
+  color: #fff;
+}
+/* line 78, granite.scss */
+.deck-container .slide a, .deck-container .slide a:hover, .deck-container .slide a:focus, .deck-container .slide a:active, .deck-container .slide a:visited {
+  color: #c00;
+  text-decoration: none;
+}
+/* line 83, granite.scss */
+.deck-container .slide a:hover, .deck-container .slide a:focus {
+  text-decoration: underline;
+}
+/* line 88, granite.scss */
+.deck-container .slide pre {
+  border-radius: 10px;
+}
+/* line 94, granite.scss */
+.deck-container > .slide .deck-before, .deck-container > .slide .deck-previous {
+  opacity: 0.4;
+}
+/* line 98, granite.scss */
+.deck-container > .slide .deck-before:not(.deck-child-current) .deck-before, .deck-container > .slide .deck-before:not(.deck-child-current) .deck-previous, .deck-container > .slide .deck-previous:not(.deck-child-current) .deck-before, .deck-container > .slide .deck-previous:not(.deck-child-current) .deck-previous {
+  opacity: 1;
+}
+/* line 104, granite.scss */
+.deck-container > .slide .deck-child-current {
+  opacity: 1;
+}
+/* line 109, granite.scss */
+.deck-container .deck-prev-link, .deck-container .deck-next-link {
+  background: #ccc;
+  font-family: serif;
+}
+/* line 113, granite.scss */
+.deck-container .deck-prev-link, .deck-container .deck-prev-link:hover, .deck-container .deck-prev-link:focus, .deck-container .deck-prev-link:active, .deck-container .deck-prev-link:visited, .deck-container .deck-next-link, .deck-container .deck-next-link:hover, .deck-container .deck-next-link:focus, .deck-container .deck-next-link:active, .deck-container .deck-next-link:visited {
+  color: #fff;
+}
+/* line 117, granite.scss */
+.deck-container .deck-prev-link:hover, .deck-container .deck-prev-link:focus, .deck-container .deck-next-link:hover, .deck-container .deck-next-link:focus {
+  background: #c00;
+  text-decoration: none;
+}
+/* line 123, granite.scss */
+.deck-container .deck-status {
+  font-size: 0.6666em;
+}
+/* line 128, granite.scss */
+.deck-container.deck-menu .slide {
+  background: #eee;
+}
+/* line 132, granite.scss */
+.deck-container.deck-menu .deck-current, .no-touch .deck-container.deck-menu .slide:hover {
+  background: #ddf;
+}
+/* line 137, granite.scss */
+.deck-container .attn-box {
+  height: 60%;
+  width: 60%;
+  margin: auto;
+  background-color: #e5e5e5;
+  border-radius: 16px;
+  box-shadow: 10px 20px 12px rgba(0, 0, 0, 0.6);
+}
+/* line 145, granite.scss */
+.deck-container .attn-box p {
+  font-size: 1.7em;
+}
+/* line 151, granite.scss */
+.deck-container strong.red {
+  color: #890000;
+}
+
+/* Pretty printing styles. Used with prettify.js. */
+
+/* SPAN elements with the classes below are added by prettyprint. */
+.pln { color: #000 }  /* plain text */
+
+@media screen {
+  .str { color: #080 }  /* string content */
+  .kwd { color: #008 }  /* a keyword */
+  .com { color: #800 }  /* a comment */
+  .typ { color: #606 }  /* a type name */
+  .lit { color: #066 }  /* a literal value */
+  /* punctuation, lisp open bracket, lisp close bracket */
+  .pun, .opn, .clo { color: #660 }
+  .tag { color: #008 }  /* a markup tag name */
+  .atn { color: #606 }  /* a markup attribute name */
+  .atv { color: #080 }  /* a markup attribute value */
+  .dec, .var { color: #606 }  /* a declaration; a variable name */
+  .fun { color: red }  /* a function name */
+}
+
+/* Use higher contrast and text-weight for printable form. */
+@media print, projection {
+  .str { color: #060 }
+  .kwd { color: #006; font-weight: bold }
+  .com { color: #600; font-style: italic }
+  .typ { color: #404; font-weight: bold }
+  .lit { color: #044 }
+  .pun, .opn, .clo { color: #440 }
+  .tag { color: #006; font-weight: bold }
+  .atn { color: #404 }
+  .atv { color: #060 }
+}
+
+/* Put a border around prettyprinted code snippets. */
+pre.prettyprint { padding: 2px; border: 1px solid #888 }
+
+/* Specify class=linenums on a pre to get line numbering */
+ol.linenums { margin-top: 0; margin-bottom: 0 } /* IE indents via margin-left */
+li.L0,
+li.L1,
+li.L2,
+li.L3,
+li.L5,
+li.L6,
+li.L7,
+li.L8,
+/* Alternate shading for lines */
+li.L1,
+li.L3,
+li.L5,
+li.L7,
+li.L9 
+
+
+
+.deck-container .goto-form {
+  position: absolute;
+  z-index: 3;
+  bottom: 10px;
+  left: 50%;
+  height: 1.75em;
+  margin: 0 0 0 -9.125em;
+  line-height: 1.75em;
+  padding: 0.625em;
+  display: none;
+  background: #ccc;
+  overflow: hidden;
+}
+.borderradius .deck-container .goto-form {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+.deck-container .goto-form label {
+  font-weight: bold;
+}
+.deck-container .goto-form label, .deck-container .goto-form input {
+  display: inline-block;
+  font-family: inherit;
+}
+
+.deck-goto .goto-form {
+  display: block;
+}
+
+#goto-slide {
+  width: 8.375em;
+  margin: 0 0.625em;
+  height: 1.4375em;
+}
+
+@media print {
+  .goto-form, #goto-slide {
+    display: none !important;
+  }
+}
+.deck-menu .slide {
+  background: #eee;
+  position: relative;
+  left: 0;
+  top: 0;
+  visibility: visible;
+  cursor: pointer;
+}
+.no-csstransforms .deck-menu > .slide {
+  float: left;
+  width: 22%;
+  height: 22%;
+  min-height: 0;
+  margin: 1%;
+  font-size: 0.22em;
+  overflow: hidden;
+  padding: 0 0.5%;
+}
+.csstransforms .deck-menu > .slide {
+  -webkit-transform: scale(0.22) !important;
+  -moz-transform: scale(0.22) !important;
+  -o-transform: scale(0.22) !important;
+  -ms-transform: scale(0.22) !important;
+  transform: scale(0.22) !important;
+  -webkit-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  -o-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding: 0 48px;
+  margin: 12px;
+}
+.deck-menu iframe, .deck-menu img, .deck-menu video {
+  max-width: 100%;
+}
+.deck-menu .deck-current, .no-touch .deck-menu .slide:hover {
+  background: #ddf;
+}
+.deck-menu.deck-container:hover .deck-prev-link, .deck-menu.deck-container:hover .deck-next-link {
+  display: none;
+}
+.deck-container .deck-prev-link, .deck-container .deck-next-link {
+  display: none;
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  width: 32px;
+  height: 32px;
+  margin-top: -16px;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 32px;
+  vertical-align: middle;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background: #888;
+}
+.borderradius .deck-container .deck-prev-link, .borderradius .deck-container .deck-next-link {
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  border-radius: 16px;
+}
+.deck-container .deck-prev-link:hover, .deck-container .deck-prev-link:focus, .deck-container .deck-prev-link:active, .deck-container .deck-prev-link:visited, .deck-container .deck-next-link:hover, .deck-container .deck-next-link:focus, .deck-container .deck-next-link:active, .deck-container .deck-next-link:visited {
+  color: #fff;
+}
+.deck-container .deck-prev-link {
+  left: 8px;
+}
+.deck-container .deck-next-link {
+  right: 8px;
+}
+.deck-container:hover .deck-prev-link, .deck-container:hover .deck-next-link {
+  display: block;
+}
+.deck-container:hover .deck-prev-link.deck-nav-disabled, .touch .deck-container:hover .deck-prev-link, .deck-container:hover .deck-next-link.deck-nav-disabled, .touch .deck-container:hover .deck-next-link {
+  display: none;
+}
+
+@media print {
+  .deck-prev-link, .deck-next-link {
+    display: none !important;
+  }
+}
+.deck-container .deck-status {
+  position: absolute;
+  bottom: 10px;
+  right: 5px;
+  color: #888;
+  z-index: 3;
+  margin: 0;
+}
+
+body.deck-container .deck-status {
+  position: fixed;
+}
+
+@media print {
+  .deck-status {
+    display: none;
+  }
+}
+.deck-container .deck-permalink {
+  display: none;
+  position: absolute;
+  z-index: 4;
+  bottom: 30px;
+  right: 0;
+  width: 48px;
+  text-align: center;
+}
+
+.no-history .deck-container:hover .deck-permalink {
+  display: block;
+}
+/* Remove this line if you are embedding deck.js in a page and
+using the scale extension. */
+.csstransforms {
+  overflow: hidden;
+}
+
+.csstransforms .deck-container.deck-scale:not(.deck-menu) > .slide {
+  -webkit-box-sizing: padding-box;
+  -moz-box-sizing: padding-box;
+  box-sizing: padding-box;
+  width: 100%;
+  padding-bottom: 20px;
+}
+.csstransforms .deck-container.deck-scale:not(.deck-menu) > .slide > .deck-slide-scaler {
+  -webkit-transform-origin: 50% 0;
+  -moz-transform-origin: 50% 0;
+  -o-transform-origin: 50% 0;
+  -ms-transform-origin: 50% 0;
+  transform-origin: 50% 0;
+}
+
+.csstransforms .deck-container.deck-menu .deck-slide-scaler {
+  -webkit-transform: none !important;
+  -moz-transform: none !important;
+  -o-transform: none !important;
+  -ms-transform: none !important;
+  transform: none !important;
+}
+.csstransitions.csstransforms {
+  overflow-x: hidden;
+}
+.csstransitions.csstransforms .deck-container > .slide {
+  -webkit-transition: -webkit-transform 500ms ease-in-out;
+  -moz-transition: -moz-transform 500ms ease-in-out;
+  -ms-transition: -ms-transform 500ms ease-in-out;
+  -o-transition: -o-transform 500ms ease-in-out;
+  transition: transform 500ms ease-in-out;
+}
+.csstransitions.csstransforms .deck-container:not(.deck-menu) > .slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 48px;
+}
+.csstransitions.csstransforms .deck-container:not(.deck-menu) > .slide .slide {
+  position: relative;
+  left: 0;
+  top: 0;
+  -webkit-transition: -webkit-transform 500ms ease-in-out, opacity 500ms ease-in-out;
+  -moz-transition: -moz-transform 500ms ease-in-out, opacity 500ms ease-in-out;
+  -ms-transition: -ms-transform 500ms ease-in-out, opacity 500ms ease-in-out;
+  -o-transition: -o-transform 500ms ease-in-out, opacity 500ms ease-in-out;
+  transition: -webkit-transform 500ms ease-in-out, opacity 500ms ease-in-out;
+}
+.csstransitions.csstransforms .deck-container:not(.deck-menu) > .slide .deck-next, .csstransitions.csstransforms .deck-container:not(.deck-menu) > .slide .deck-after {
+  visibility: visible;
+  -webkit-transform: translate3d(200%, 0, 0);
+  -moz-transform: translate(200%, 0);
+  -ms-transform: translate(200%, 0);
+  -o-transform: translate(200%, 0);
+  transform: translate3d(200%, 0, 0);
+}
+.csstransitions.csstransforms .deck-container:not(.deck-menu) > .deck-previous {
+  -webkit-transform: translate3d(-200%, 0, 0);
+  -moz-transform: translate(-200%, 0);
+  -ms-transform: translate(-200%, 0);
+  -o-transform: translate(-200%, 0);
+  transform: translate3d(-200%, 0, 0);
+}
+.csstransitions.csstransforms .deck-container:not(.deck-menu) > .deck-before {
+  -webkit-transform: translate3d(-400%, 0, 0);
+  -moz-transform: translate(-400%, 0);
+  -ms-transform: translate(-400%, 0);
+  -o-transform: translate(-400%, 0);
+  transform: translate3d(-400%, 0, 0);
+}
+.csstransitions.csstransforms .deck-container:not(.deck-menu) > .deck-next {
+  -webkit-transform: translate3d(200%, 0, 0);
+  -moz-transform: translate(200%, 0);
+  -ms-transform: translate(200%, 0);
+  -o-transform: translate(200%, 0);
+  transform: translate3d(200%, 0, 0);
+}
+.csstransitions.csstransforms .deck-container:not(.deck-menu) > .deck-after {
+  -webkit-transform: translate3d(400%, 0, 0);
+  -moz-transform: translate(400%, 0);
+  -ms-transform: translate(400%, 0);
+  -o-transform: translate(400%, 0);
+  transform: translate3d(400%, 0, 0);
+}
+.csstransitions.csstransforms .deck-container:not(.deck-menu) > .deck-before .slide, .csstransitions.csstransforms .deck-container:not(.deck-menu) > .deck-previous .slide {
+  visibility: visible;
+}
+.csstransitions.csstransforms .deck-container:not(.deck-menu) > .deck-child-current {
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+
+
+table {
+color: #333;
+font-family: Helvetica, Arial, sans-serif;
+width: 640px;
+font-size: 20px !important;
+border-collapse:
+collapse; border-spacing: 0;
+}
+
+td, th {
+border: 1px solid #000 !important; /* No more visible border */
+height: 30px;
+padding: 10px !important;
+text-align: left !important;
+transition: all 0.3s; /* Simple transition for hover effect */
+}
+
+th {
+background: #DFDFDF; /* Darken header a bit */
+font-weight: bold;
+}
+
+td {
+background: #FAFAFA;
+text-align: center;
+}
